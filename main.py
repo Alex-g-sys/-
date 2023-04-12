@@ -1,69 +1,133 @@
-# 1. Создать список и заполнить его элементами различных типов данных.
-# Реализовать скрипт проверки типа данных каждого элемента. Использовать
-# функцию type() для проверки типа. Элементы списка можно не запрашивать у пользователя,
-# а указать явно, в программе.
-list = [False, 'ddd', 3.4e3, (8, 5), [4, 6], "World"] #лист с переменными разных типов
-for i in range (len(list)): #цикл с перебором всех элементов циклов
-    print(f"Type of variable in the list: {type(list[i])}") #вывод на консоль с указанием типа
+def get_x():
+    while True:
+        try:
+            num = float(input("Введите число: "))
+            return num
+        except ValueError:
+            print("Вы ввели не число, попробуйте ещё раз.")
 
 
-# 2. Для списка реализовать обмен значений соседних элементов.Значениями обмениваются
-# элементы с индексами 0 и 1, 2 и 3 и т. д. При нечётном количестве элементов последний
-# сохранить на своём месте. Для заполнения списка элементов нужно использовать функцию input().
-number = int(input("Number of items in the list?: "))
-while(number < 0): #проверка, пока пользователь не введёт положителное число
-    print('you entered a negative number')
-    number = int(input('enter a positive number: '))
-list_second = []
-for i in range(number): #цикл для вввода списка
-    list_second.append(input(f"Enter item : "))
-print(f"list:")
-print(*list_second, sep = "\n") #вывод списка в консоль
-n = len(list_second) - 1 # переменная для длины листа
-i = 0 #индекс для цикла
-while (i < n): #обход всего списка с шагом 2, чтобы поменять местами соседние элементы
-    list_second[i], list_second[i+1] = list_second[i+1], list_second[i]
-    i += 2
-print(f"Result list:\n", list_second) #вывести список результаты
 
+def enter_number(types, string=""):
+    while True:
+        num = input(string)
+        try:
+            val = int(num) if types == "int" else float(num)
+            if val >= 0:
+                return val
+            else:
+                print("ввели символ, а не число")
+        except ValueError:
+            print("Неправильно введённое значение ")
 
-# 3. Пользователь вводит месяц в виде целого числа от 1 до 12. Сообщить, к какому времени
-# года относится месяц (зима, весна, лето, осень). Напишите решения через list и dict.
-
-list = ['winter', 'spring', 'summer', 'autumn']
-dict = {1 : 'winter', 2 : 'spring', 3 : 'summer', 4 : 'autumn'}
-month = int(input("Enter month number: "))
-while(month < 0): #проверка, пока пользователь не введёт положителное число
-    print('you entered a negative number')
-    month = int(input('enter a positive number: '))
-if (month < 12): #проверка выходит ли номер месяца за предел
-    if (month > 2 and month < 6): # проверка на время года
-        print(f"Result dict:\n", dict.get(2))
-        print(f"Result list:\n", list[1])
-    elif (month > 5 and month < 9):
-        print(f"Result dict:\n", dict.get(3))
-        print(f"Result list:\n", list[2])
-    elif (month > 8 and month < 12):
-        print(f"Result dict:\n", dict.get(4))
-        print(f"Result list:\n", list[3])
+# 1. Реализовать функцию, принимающую два числа
+# (позиционные аргументы) и выполняющую их деление.
+# Числа запрашивать у пользователя, предусмотреть
+# обработку ситуации деления на ноль.
+def division(a, b):
+    if b == 0:
+        print("Деление на ноль невозможно")
     else:
-        print(f"Result dict:\n", dict.get(1))
-        print(f"Result list:\n", list[0])
-else:
-    print('There is no such month')
+        result = a / b
+        print("Результат деления:", result)
+
+# 2. Выполнить функцию, которая принимает несколько параметров,
+# описывающих данные пользователя: имя, фамилия, год рождения,
+# город проживания, email, телефон. Функция должна принимать
+# параметры как именованные аргументы. Осуществить вывод
+# данных о пользователе одной строкой.
+
+def user_info(name, surname, birth_year, city, email, phone):
+    print(f"{name} {surname}, {birth_year} года рождения, проживает в городе {city}. Email: {email}, телефон: {phone}")
+# 3. Реализовать функцию my_func(), которая принимает три
+# позиционных аргумента и возвращает сумму наибольших двух
+# аргументов.
+def my_func(a, b, c):
+    numbers = [a, b, c]
+    numbers.sort(reverse=True)
+    return numbers[0] + numbers[1]
+
+# 4. Программа принимает действительное
+# положительное число x и целое отрицательное число y.
+# Выполните возведение числа x в степень y.
+# Задание реализуйте в виде функции my_func(x, y).
+# При решении задания нужно обойтись без встроенной функции
+# возведения числа в степень.
+def my_func_3(x, y):
+    result = 1
+    for i in range(abs(y)):
+        result *= x
+    if y < 0:
+        result = 1 / result
+    return result
+
+# 5. Программа запрашивает у пользователя строку чисел,
+# разделённых пробелом. При нажатии Enter должна выводиться
+# сумма чисел. Пользователь может продолжить ввод чисел,
+# разделённых пробелом и снова нажать Enter. Сумма вновь
+# введённых чисел будет добавляться к уже подсчитанной сумме.
+#Но если вместо числа вводится специальный символ, выполнение
+# программы завершается. Если специальный символ введён после
+# нескольких чисел, то вначале нужно добавить сумму этих чисел
+# к полученной ранее сумме и после этого завершить программу.
+def my_func_5(x, y):
+    sum = 0
+    while True:
+        input_string = input("Введите числа, разделённые пробелом (или 'q' для выхода): ")
+        if input_string == 'q':
+            break
+        numbers = input_string.split()
+        for number in numbers:
+            sum += int(number)
+        print("Сумма чисел: ", sum)
 
 
-# 4. Пользователь вводит строку из нескольких слов, разделённых пробелами.
-# Вывести каждое слово с новой строки. Строки нужно пронумеровать. Если слово длинное,
-# выводить только первые 10 букв в слове.
+# 6. Реализовать функцию int_func(), принимающую слова из
+# маленьких латинских букв и возвращающую их же, но с прописной
+# первой буквой. Например, print(int_func(‘text’)) -> Text.
+def int_func(word):
+    # Возвращаем слово с заглавной первой буквой
+    return word.capitalize()
 
-string_text = input("Enter string: ") #ввод с консоли текста
-word = [] #массив отдельных слов без пробела
-i = 0 #индекс для цикла
-number = 0 #индекс для подсчёта слов и вывода в консоль. Счёт слов в консоли начинается с "1". А к тому же эл-ту в списке мы будем обращаться на 1 меньше
-n = string_text.count(' ') + 1 #кол-во пробелов
-while (i < n): #проход всех слов в списке
-    number = number + 1
-    word = string_text.split() #разделение на слова
-    print(f" {number} {word[i][0:10]}")# вывод символов. Если больше 10 символов в слове,то на консоль они не выводятся
-    i =i + 1 #индес для прогонки цикла
+
+start = True
+while start:
+    print("1. деление чисел")
+    print("2. данные пользователя")
+    print("3. три позиционных аргумента и возвращает сумму наибольших двухаргументов")
+    print("4. возведение числа x в степень y")
+    print("5. сумма введённых чисел")
+    print("6. текст с прописной буквы")
+    print("7. выход")
+    print("___________________________________________________________________________________________________________________________")
+    menu_number = enter_number("int")
+    if menu_number == 1:
+        a = float(input("Введите первое число: "))
+        b = float(input("Введите второе число: "))
+        division(a, b)
+    elif menu_number == 2:
+        user_info(name="Иван", surname="Иванов", birth_year=1990, city="Москва", email="ivanov@mail.ru",
+                  phone="+7 (999) 123-45-67")
+    elif menu_number == 3:
+        a = get_x()
+        b = get_x()
+        c = get_x()
+        my_func(a, b, c)
+    elif menu_number == 4:
+            x = get_x()
+            y = get_x()
+            my_func_3(x, y)
+    elif menu_number == 5:
+        x = get_x()
+        y = get_x()
+        my_func_5(x, y)
+    elif menu_number == 6:
+        word = input("Введите первое число: ")
+        int_func(word)
+    elif menu_number == 7:
+        start = False
+    else:
+        print("you enter not number 1 of 3")
+
+
+
