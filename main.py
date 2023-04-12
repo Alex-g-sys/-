@@ -20,132 +20,114 @@ def enter_number(types, string=""):
         except ValueError:
             print("Неправильно введённое значение ")
 
-
-#1.  Создать программный файл в текстовом формате, записать в него построчно данные,
-# вводимые пользователем. Об окончании ввода данных будет свидетельствовать пустая строка.
-def write_to_file():
-    filename = input("Введите название файла: ")
-    with open(filename, "w") as f:
-        while True:
-            line = input("Введите строку для записи в файл (пустая строка для завершения): ")
-            if not line:
-                break
-            f.write(line + "\n")
-    print("Данные успешно записаны в файл", filename)
-
-#2. Создать текстовый файл (не программно), сохранить в нём несколько строк, выполнить подсчёт строк и слов в каждой строке.
-def count_lines_and_words(file_path):
-    with open(file_path, 'r') as file:
-        lines = file.readlines()  # Читаем все строки файла в список
-        for i, line in enumerate(lines):
-                words = line.split()  # Разделяем строку на слова
-                num_words = len(words)  # Подсчитываем количество слов в строке
-                print(f"Строка {i + 1} содержит {num_words} слов и {len(line)} символов.")
-        num_lines = len(lines)  # Подсчитываем количество строк в файле
-        print(f"Файл содержит {num_lines} строк.")
-
-#3.Создать текстовый файл (не программно). Построчно записать фамилии сотрудников и величину их окладов (не менее 10 строк).
-# Определить, кто из сотрудников имеет оклад менее 20 тысяч, вывести фамилии этих сотрудников. Выполнить подсчёт средней
-# величины дохода сотрудников.
-# Открываем текстовый файл с записями о зарплатах
-def analyze_salaries():
-    # открытие файла и чтение данных
-    with open('employees.txt', 'r+', encoding="utf-8") as file:
-        data = file.readlines()
-
-    # создание списка сотрудников и окладов
-    employees = {}
-    for line in data:
-        line_data = line.split()
-        name = line_data[0]
-        salary = float(line_data[1])
-        employees[name] = salary
-
-    # проверка окладов сотрудников
-    less_than_20k = []
-    for name, salary in employees.items():
-        if salary < 20000:
-            less_than_20k.append(name)
-
-    # вывод фамилий сотрудников с окладом менее 20 тысяч
-    if len(less_than_20k) > 0:
-        print("Следующие сотрудники имеют оклад менее 20 тысяч:")
-        print(', '.join(less_than_20k))
+# 1. Реализовать функцию, принимающую два числа
+# (позиционные аргументы) и выполняющую их деление.
+# Числа запрашивать у пользователя, предусмотреть
+# обработку ситуации деления на ноль.
+def division(a, b):
+    if b == 0:
+        print("Деление на ноль невозможно")
     else:
-        print("Нет сотрудников с окладом менее 20 тысяч.")
+        result = a / b
+        print("Результат деления:", result)
 
-    # вычисление среднего значения оклада
-    total_salary = sum(employees.values())
-    average_salary = total_salary / len(employees)
-    print("Средний доход сотрудников:", round(average_salary, 2))
+# 2. Выполнить функцию, которая принимает несколько параметров,
+# описывающих данные пользователя: имя, фамилия, год рождения,
+# город проживания, email, телефон. Функция должна принимать
+# параметры как именованные аргументы. Осуществить вывод
+# данных о пользователе одной строкой.
 
-#4.Создать (не программно) текстовый файл со следующим содержимым:
-# One — 1
-# Two — 2
-# Three — 3
-# Four — 4
-# Напишите программу, открывающую файл на чтение и считывающую построчно данные.
-# При этом английские числительные должны заменяться на русские.
-# Новый блок строк должен записываться в новый текстовый файл.
-def translate_numbers():
-    input_filename = input("Введите название входного файла: ")
-    output_filename = input("Введите название выходного файла: ")
-    with open(input_filename, "r") as f_in, open(output_filename, "w") as f_out:
-        for line in f_in:
-            if "One" in line:
-                line = line.replace("One", "Один")
-            elif "Two" in line:
-                line = line.replace("Two", "Два")
-            elif "Three" in line:
-                line = line.replace("Three", "Три")
-            elif "Four" in line:
-                line = line.replace("Four", "Четыре")
-            f_out.write(line)
+def user_info(name, surname, birth_year, city, email, phone):
+    print(f"{name} {surname}, {birth_year} года рождения, проживает в городе {city}. Email: {email}, телефон: {phone}")
+# 3. Реализовать функцию my_func(), которая принимает три
+# позиционных аргумента и возвращает сумму наибольших двух
+# аргументов.
+def my_func(a, b, c):
+    numbers = [a, b, c]
+    numbers.sort(reverse=True)
+    return numbers[0] + numbers[1]
+
+# 4. Программа принимает действительное
+# положительное число x и целое отрицательное число y.
+# Выполните возведение числа x в степень y.
+# Задание реализуйте в виде функции my_func(x, y).
+# При решении задания нужно обойтись без встроенной функции
+# возведения числа в степень.
+def my_func_3(x, y):
+    result = 1
+    for i in range(abs(y)):
+        result *= x
+    if y < 0:
+        result = 1 / result
+    return result
+
+# 5. Программа запрашивает у пользователя строку чисел,
+# разделённых пробелом. При нажатии Enter должна выводиться
+# сумма чисел. Пользователь может продолжить ввод чисел,
+# разделённых пробелом и снова нажать Enter. Сумма вновь
+# введённых чисел будет добавляться к уже подсчитанной сумме.
+#Но если вместо числа вводится специальный символ, выполнение
+# программы завершается. Если специальный символ введён после
+# нескольких чисел, то вначале нужно добавить сумму этих чисел
+# к полученной ранее сумме и после этого завершить программу.
+def my_func_5(x, y):
+    sum = 0
+    while True:
+        input_string = input("Введите числа, разделённые пробелом (или 'q' для выхода): ")
+        if input_string == 'q':
+            break
+        numbers = input_string.split()
+        for number in numbers:
+            sum += int(number)
+        print("Сумма чисел: ", sum)
 
 
-#5. Создать (программно) текстовый файл, записать в него программно набор чисел,
-# разделённых пробелами. Программа должна подсчитывать сумму чисел в файле и выводить её на экран.
-def sum_numbers():
-    filename = input("Введите название файла: ")
-    with open(filename, "w") as f:
-        numbers = input("Введите числа через пробел: ")
-        f.write(numbers)
-    with open(filename, "r") as f:
-        numbers = f.read().split()
-        numbers = [int(num) for num in numbers]
-        total = sum(numbers)
-        print(f"Сумма чисел в файле {filename}: {total}")
-
-
+# 6. Реализовать функцию int_func(), принимающую слова из
+# маленьких латинских букв и возвращающую их же, но с прописной
+# первой буквой. Например, print(int_func(‘text’)) -> Text.
+def int_func(word):
+    # Возвращаем слово с заглавной первой буквой
+    return word.capitalize()
 
 
 start = True
 while start:
-    print("1. Записать в файл")
-    print("2. выполнить подсчёт строк и слов в каждой строке")
-    print("3. оклады сотрудников")
-    print("4. перевести числа")
-    print("5. сумма чисел в файле")
-    print("6. выход")
+    print("1. деление чисел")
+    print("2. данные пользователя")
+    print("3. три позиционных аргумента и возвращает сумму наибольших двухаргументов")
+    print("4. возведение числа x в степень y")
+    print("5. сумма введённых чисел")
+    print("6. текст с прописной буквы")
+    print("7. выход")
     print("___________________________________________________________________________________________________________________________")
     menu_number = enter_number("int")
     if menu_number == 1:
-        write_to_file()
+        a = float(input("Введите первое число: "))
+        b = float(input("Введите второе число: "))
+        division(a, b)
     elif menu_number == 2:
-        file_path = "C:/Users/Olga/PycharmProjects/Задание_3/text_1.txt" #здесь нужно внести путь к вашему файлу
-        count_lines_and_words(file_path)
+        user_info(name="Иван", surname="Иванов", birth_year=1990, city="Москва", email="ivanov@mail.ru",
+                  phone="+7 (999) 123-45-67")
     elif menu_number == 3:
-        analyze_salaries()
+        a = get_x()
+        b = get_x()
+        c = get_x()
+        my_func(a, b, c)
     elif menu_number == 4:
-        translate_numbers()
+            x = get_x()
+            y = get_x()
+            my_func_3(x, y)
     elif menu_number == 5:
-        sum_numbers()
+        x = get_x()
+        y = get_x()
+        my_func_5(x, y)
     elif menu_number == 6:
+        word = input("Введите первое число: ")
+        int_func(word)
+    elif menu_number == 7:
         start = False
     else:
-        print("you enter not number 1 of 61"
-              "")
-
+        print("you enter not number 1 of 3")
 
 
 
